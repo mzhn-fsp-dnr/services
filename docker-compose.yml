@@ -1,0 +1,12 @@
+services:
+  mzhn-services:
+    container_name: mzhn-services
+    build:
+      context: .
+    ports:
+      - 80:80
+    volumes:
+      - api-data:/app/api/data
+    depends_on:
+      - api-redis
+      - api-mongo
