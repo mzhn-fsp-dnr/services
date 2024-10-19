@@ -1,18 +1,21 @@
-FROM python:3.8-slim-buster
+FROM python:3.12-alpine3.20
 
-# Update
-RUN apt-get -y update
-
-# Upgrade
-RUN apt-get -y upgrade
-
-# Install packages
-RUN apt-get -y install python3-pip
-
+# Set the working directory inside the container
 WORKDIR /app
 
-COPY . /app
+# Install system dependencies
+# RUN apk update && apk add --no-cache \
+#     gcc \
+#     g++ \
+#     make \
+#     libffi-dev \
+#     openssl-dev \
+#     musl-dev 
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80"]
+ARG APP_PORT
+
+CMD uvicorn src.main:app --host 0.0.0.0 --port $APP_PORT
