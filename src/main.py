@@ -14,8 +14,6 @@ from src.routers import services
 from src import database, config
 from src.models import base
 
-base.Base.metadata.create_all(bind=database.engine)
-
 
 @lru_cache
 def get_settings():

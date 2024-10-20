@@ -5,7 +5,8 @@ services:
     env_file:
       - .env
     environment:
-      - PG_HOST=svc-pg
+      WAIT_HOSTS: svc-pg:5432
+      PG_HOST: svc-pg
     build:
       context: .
       args:
